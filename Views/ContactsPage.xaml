@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContactApp.Views.ContactsPage"
+             xmlns:viewmodel="clr-namespace:ContactApp.ViewModels"
+             xmlns:model="clr-namespace:ContactApp.Models"
+             x:DataType="viewmodel:ContactsViewModel"
+             Title="{Binding Title}">
+
+	<Grid RowDefinitions="Auto,*,Auto" Padding="20">
+		<Label Text="Contact List" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,20"/>
+
+		<CollectionView
+            Grid.Row="1"
+            ItemsSource="{Binding Contacts}"
+            SelectionMode="Single"
+            SelectedItem="{Binding SelectedContact}"
+            SelectionChangedCommand="{Binding ContactSelectedCommand}">
+			<CollectionView.EmptyView>
+				<StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+					<Label Text="No contacts available" FontSize="18" HorizontalOptions="Center"/>
+				</StackLayout>
+			</CollectionView.EmptyView>
+			<CollectionView.ItemTemplate>
+				<DataTemplate x:DataType="model:ContactModel">
+					<Frame Margin="0,5" Padding="10" BorderColor="{StaticResource Primary}">
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<Label Grid.Column="0" Grid.Row="0" Text="{Binding Name}" FontAttributes="Bold" FontSize="16"/>
+							<Label Grid.Column="0" Grid.Row="1" Text="{Binding Email}" FontSize="14" TextColor="Gray"/>
+							<Image Grid.Column="1" Grid.RowSpan="2" Source="arrow_right.png" WidthRequest="20" HorizontalOptions="End"/>
+						</Grid>
+					</Frame>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
+
+		<Button
+            Grid.Row="2"
+            Text="Add New Contact"
+            Command="{Binding GoToAddContactCommand}"
+            HorizontalOptions="Center"
+            WidthRequest="200"
+            BackgroundColor="{StaticResource Primary}"
+            TextColor="White"/>
+	</Grid>
+</ContentPage>

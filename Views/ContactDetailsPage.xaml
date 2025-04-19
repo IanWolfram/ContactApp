@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContactApp.Views.ContactDetailsPage"
+             xmlns:viewmodel="clr-namespace:ContactApp.ViewModels"
+             xmlns:class="clr-namespace:ContactApp.Views"
+             x:DataType="viewmodel:ContactDetailsViewModel"
+             Title="{Binding Title}">
+
+	<Grid RowDefinitions="Auto,*,Auto"
+          Padding="20">
+
+		<VerticalStackLayout Grid.Row="0" Spacing="15">
+			<Label Text="Contact Details" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,20"/>
+
+			<Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto">
+				<Label Grid.Row="0" Grid.Column="0" Text="Name:" FontAttributes="Bold" VerticalOptions="Center"/>
+				<Entry Grid.Row="0" Grid.Column="1" Text="{Binding Name}" IsEnabled="{Binding IsEditing}" Margin="10,0,0,10"/>
+
+				<Label Grid.Row="1" Grid.Column="0" Text="Email:" FontAttributes="Bold" VerticalOptions="Center"/>
+				<Entry Grid.Row="1" Grid.Column="1" Text="{Binding Email}" IsEnabled="{Binding IsEditing}" Keyboard="Email" Margin="10,0,0,10"/>
+
+				<Label Grid.Row="2" Grid.Column="0" Text="Phone:" FontAttributes="Bold" VerticalOptions="Center"/>
+				<Entry Grid.Row="2" Grid.Column="1" Text="{Binding PhoneNumber}" IsEnabled="{Binding IsEditing}" Keyboard="Telephone" Margin="10,0,0,10"/>
+
+				<Label Grid.Row="3" Grid.Column="0" Text="Description:" FontAttributes="Bold" VerticalOptions="Start"/>
+				<Editor Grid.Row="3" Grid.Column="1" Text="{Binding Description}" IsEnabled="{Binding IsEditing}" HeightRequest="100" Margin="10,0,0,10"/>
+			</Grid>
+		</VerticalStackLayout>
+
+		<HorizontalStackLayout Grid.Row="2" Spacing="20" HorizontalOptions="Center">
+			<Button Text="Back" Command="{Binding GoBackCommand}" BackgroundColor="Gray" TextColor="White" WidthRequest="100"/>
+
+			<Button Text="{Binding IsEditing, Converter={StaticResource BoolToStringConverter}, ConverterParameter='Save|Edit'}"
+                    Command="{Binding IsEditing, Converter={StaticResource BoolToCommandConverter}, ConverterParameter='{x:Reference saveChangesCommand}|{x:Reference toggleEditCommand}'}"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    WidthRequest="100"/>
+		</HorizontalStackLayout>
+	</Grid>
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<x:Reference x:Key="toggleEditCommand" Name="toggleEditCommand"/>
+			<x:Reference x:Key="saveChangesCommand" Name="saveChangesCommand"/>
+
+			<x:Array x:Key="commands" Type="{x:Type Command}">
+				<Binding Path="ToggleEditCommand" x:Name="toggleEditCommand"/>
+				<Binding Path="SaveChangesCommand" x:Name="saveChangesCommand"/>
+			</x:Array>
+
+			<class:BoolToStringConverter x:Key="BoolToStringConverter"/>
+			<class:BoolToCommandConverter x:Key="BoolToCommandConverter"/>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+</ContentPage>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContactApp.Views.AddContactPage"
+             xmlns:viewmodel="clr-namespace:ContactApp.ViewModels"
+             x:DataType="viewmodel:AddContactViewModel"
+             Title="{Binding Title}">
+
+	<Grid RowDefinitions="Auto,*,Auto"
+          ColumnDefinitions="*,*"
+          Padding="20">
+
+		<VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="2" Spacing="15">
+			<Label Text="Add New Contact" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,20"/>
+
+			<Label Text="Name:" FontAttributes="Bold"/>
+			<Entry Text="{Binding Name}" Placeholder="Enter name" Margin="0,0,0,10"/>
+
+			<Label Text="Email:" FontAttributes="Bold"/>
+			<Entry Text="{Binding Email}" Placeholder="Enter email" Keyboard="Email" Margin="0,0,0,10"/>
+
+			<Label Text="Phone Number:" FontAttributes="Bold"/>
+			<Entry Text="{Binding PhoneNumber}" Placeholder="Enter phone number" Keyboard="Telephone" Margin="0,0,0,10"/>
+
+			<Label Text="Description:" FontAttributes="Bold"/>
+			<Editor Text="{Binding Description}" Placeholder="Enter description" HeightRequest="100" Margin="0,0,0,20"/>
+		</VerticalStackLayout>
+
+		<Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                Text="Save Contact"
+                Command="{Binding SaveContactCommand}"
+                HorizontalOptions="Center"
+                WidthRequest="200"
+                BackgroundColor="{StaticResource Primary}"
+                TextColor="White"/>
+	</Grid>
+
+</ContentPage>
